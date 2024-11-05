@@ -16,14 +16,10 @@
 
 //! ChainSpecs dedicated to parachain setups for testing and example purposes
 
-use crate::chain_spec::get_from_seed;
-use parachains_common::genesis_config_helpers::get_account_id_from_seed;
 use polkadot_omni_node_lib::chain_spec::{Extensions, GenericChainSpec};
 use sc_chain_spec::ChainType;
-use sp_core::{
-	sr25519::{self, Pair as SrPair},
-	Pair,
-};
+use sp_core::{sr25519::Pair as SrPair, Pair};
+use sp_keyring::Sr25519Keyring as Keyring;
 use yet_another_parachain_runtime::AuraId;
 
 const NUM_ACCOUNT_PAIRS: usize = 16000;
@@ -66,20 +62,7 @@ pub fn yet_another_parachain_config(
 	chain_type: ChainType,
 	para_id: u32,
 ) -> GenericChainSpec {
-	let mut endowed_accounts = vec![
-		get_account_id_from_seed::<sr25519::Public>("Alice"),
-		get_account_id_from_seed::<sr25519::Public>("Bob"),
-		get_account_id_from_seed::<sr25519::Public>("Charlie"),
-		get_account_id_from_seed::<sr25519::Public>("Dave"),
-		get_account_id_from_seed::<sr25519::Public>("Eve"),
-		get_account_id_from_seed::<sr25519::Public>("Ferdie"),
-		get_account_id_from_seed::<sr25519::Public>("Alice//stash"),
-		get_account_id_from_seed::<sr25519::Public>("Bob//stash"),
-		get_account_id_from_seed::<sr25519::Public>("Charlie//stash"),
-		get_account_id_from_seed::<sr25519::Public>("Dave//stash"),
-		get_account_id_from_seed::<sr25519::Public>("Eve//stash"),
-		get_account_id_from_seed::<sr25519::Public>("Ferdie//stash"),
-	];
+	let mut endowed_accounts = Keyring::well_known().map(|x| x.to_account_id()).collect::<Vec<_>>();
 
 	endowed_accounts.extend(
 		derive_accounts(NUM_ACCOUNT_PAIRS, "//Sender".into())
@@ -104,11 +87,11 @@ pub fn yet_another_parachain_config(
 		"balances": {
 			"balances": endowed_accounts.iter().cloned().map(|k| (k, 1u64 << 60)).collect::<Vec<_>>(),
 		},
-		"sudo": { "key": Some(get_account_id_from_seed::<sr25519::Public>("Alice")) },
+		"sudo": { "key": Some(Keyring::Alice.to_account_id()) },
 		"parachainInfo": {
 			"parachainId": para_id,
 		},
-		"aura": { "authorities": vec![get_from_seed::<AuraId>("Alice"), get_from_seed::<AuraId>("Bob")] },
+		"aura": { "authorities": vec![Into::<AuraId>::into(Keyring::Alice.public()), Keyring::Bob.public().into()] },
 	}))
 	.build()
 }
