@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1731074265988,
+  "lastUpdate": 1731085287873,
   "repoUrl": "https://github.com/paritytech/polkadot-sdk",
   "entries": {
     "approval-voting-regression-bench": [
@@ -35593,6 +35593,105 @@ window.BENCHMARK_DATA = {
           {
             "name": "test-environment",
             "value": 3.3225675516521482,
+            "unit": "seconds"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "65984904+programskillforverification@users.noreply.github.com",
+            "name": "Joseph Zhao",
+            "username": "programskillforverification"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "edf79aa972bcf2e043e18065a9bb860ecdbd1a6e",
+          "message": "Migrate pallet-transaction-storage and pallet-indices to benchmark v2 (#6290)\n\nPart of:\n#6202\n\n---------\n\nCo-authored-by: Giuseppe Re <giuseppe.re@parity.io>\nCo-authored-by: GitHub Action <action@github.com>",
+          "timestamp": "2024-11-08T15:39:19Z",
+          "tree_id": "3605a9ef87fb79b3eb31981433c390bb2837a76a",
+          "url": "https://github.com/paritytech/polkadot-sdk/commit/edf79aa972bcf2e043e18065a9bb860ecdbd1a6e"
+        },
+        "date": 1731085268539,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Sent to peers",
+            "value": 63628.52,
+            "unit": "KiB"
+          },
+          {
+            "name": "Received from peers",
+            "value": 52941,
+            "unit": "KiB"
+          },
+          {
+            "name": "approval-voting-parallel",
+            "value": 12.275553827279978,
+            "unit": "seconds"
+          },
+          {
+            "name": "approval-voting-parallel/approval-voting-parallel-3",
+            "value": 2.4033634902800003,
+            "unit": "seconds"
+          },
+          {
+            "name": "approval-distribution/test-environment",
+            "value": 0.000019565339999999997,
+            "unit": "seconds"
+          },
+          {
+            "name": "approval-voting-parallel/approval-voting-parallel-1",
+            "value": 2.4131802566399996,
+            "unit": "seconds"
+          },
+          {
+            "name": "approval-voting-parallel/approval-voting-parallel-2",
+            "value": 2.45080020233,
+            "unit": "seconds"
+          },
+          {
+            "name": "approval-voting-parallel/approval-voting-parallel-db",
+            "value": 2.08558688787,
+            "unit": "seconds"
+          },
+          {
+            "name": "approval-voting-parallel/approval-voting-parallel-0",
+            "value": 2.4290530375099992,
+            "unit": "seconds"
+          },
+          {
+            "name": "approval-distribution",
+            "value": 0.000019565339999999997,
+            "unit": "seconds"
+          },
+          {
+            "name": "approval-voting-parallel/approval-voting-gather-signatures",
+            "value": 0.005918438720000007,
+            "unit": "seconds"
+          },
+          {
+            "name": "approval-voting/test-environment",
+            "value": 0.000019393129999999998,
+            "unit": "seconds"
+          },
+          {
+            "name": "approval-voting-parallel/approval-voting-parallel-subsystem",
+            "value": 0.4876515139299814,
+            "unit": "seconds"
+          },
+          {
+            "name": "test-environment",
+            "value": 3.2910134055321842,
+            "unit": "seconds"
+          },
+          {
+            "name": "approval-voting",
+            "value": 0.000019393129999999998,
             "unit": "seconds"
           }
         ]
