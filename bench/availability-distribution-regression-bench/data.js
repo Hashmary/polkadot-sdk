@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1731074238276,
+  "lastUpdate": 1731085260900,
   "repoUrl": "https://github.com/paritytech/polkadot-sdk",
   "entries": {
     "availability-distribution-regression-bench": [
@@ -35881,6 +35881,60 @@ window.BENCHMARK_DATA = {
           {
             "name": "bitfield-distribution",
             "value": 0.024568892500000005,
+            "unit": "seconds"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "65984904+programskillforverification@users.noreply.github.com",
+            "name": "Joseph Zhao",
+            "username": "programskillforverification"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "edf79aa972bcf2e043e18065a9bb860ecdbd1a6e",
+          "message": "Migrate pallet-transaction-storage and pallet-indices to benchmark v2 (#6290)\n\nPart of:\n#6202\n\n---------\n\nCo-authored-by: Giuseppe Re <giuseppe.re@parity.io>\nCo-authored-by: GitHub Action <action@github.com>",
+          "timestamp": "2024-11-08T15:39:19Z",
+          "tree_id": "3605a9ef87fb79b3eb31981433c390bb2837a76a",
+          "url": "https://github.com/paritytech/polkadot-sdk/commit/edf79aa972bcf2e043e18065a9bb860ecdbd1a6e"
+        },
+        "date": 1731085241059,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Sent to peers",
+            "value": 18481.666666666653,
+            "unit": "KiB"
+          },
+          {
+            "name": "Received from peers",
+            "value": 433.3333333333332,
+            "unit": "KiB"
+          },
+          {
+            "name": "bitfield-distribution",
+            "value": 0.024717302786666666,
+            "unit": "seconds"
+          },
+          {
+            "name": "availability-store",
+            "value": 0.1811742842533333,
+            "unit": "seconds"
+          },
+          {
+            "name": "availability-distribution",
+            "value": 0.01657527937333334,
+            "unit": "seconds"
+          },
+          {
+            "name": "test-environment",
+            "value": 0.009013272273333397,
             "unit": "seconds"
           }
         ]
