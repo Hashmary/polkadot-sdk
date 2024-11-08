@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1731074293387,
+  "lastUpdate": 1731085314844,
   "repoUrl": "https://github.com/paritytech/polkadot-sdk",
   "entries": {
     "statement-distribution-regression-bench": [
@@ -19355,6 +19355,50 @@ window.BENCHMARK_DATA = {
           {
             "name": "test-environment",
             "value": 0.04529756296199998,
+            "unit": "seconds"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "65984904+programskillforverification@users.noreply.github.com",
+            "name": "Joseph Zhao",
+            "username": "programskillforverification"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "edf79aa972bcf2e043e18065a9bb860ecdbd1a6e",
+          "message": "Migrate pallet-transaction-storage and pallet-indices to benchmark v2 (#6290)\n\nPart of:\n#6202\n\n---------\n\nCo-authored-by: Giuseppe Re <giuseppe.re@parity.io>\nCo-authored-by: GitHub Action <action@github.com>",
+          "timestamp": "2024-11-08T15:39:19Z",
+          "tree_id": "3605a9ef87fb79b3eb31981433c390bb2837a76a",
+          "url": "https://github.com/paritytech/polkadot-sdk/commit/edf79aa972bcf2e043e18065a9bb860ecdbd1a6e"
+        },
+        "date": 1731085295433,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Received from peers",
+            "value": 106.39999999999996,
+            "unit": "KiB"
+          },
+          {
+            "name": "Sent to peers",
+            "value": 127.928,
+            "unit": "KiB"
+          },
+          {
+            "name": "test-environment",
+            "value": 0.044505638953999956,
+            "unit": "seconds"
+          },
+          {
+            "name": "statement-distribution",
+            "value": 0.03519632995200001,
             "unit": "seconds"
           }
         ]
