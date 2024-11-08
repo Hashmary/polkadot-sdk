@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["send_transaction","wait_for_receipt"]};
