@@ -842,4 +842,102 @@ mod test {
 			assert_eq!(WithLen::decode_len(0), Some(1));
 		})
 	}
+
+	/// Question/Problem: StorageMap + key as `Identity` and `()`
+	/// It compiles and storing/getting values work, but we cannot iterate it,
+	/// is it a bug or am I missing anything?
+	///
+	/// ## Test it:
+	/// git checkout bko-test
+	/// cargo test -p frame-support iter_map_identity_with_unit_does_not_work
+	#[test]
+	fn iter_map_identity_with_unit_does_not_work() {
+		type D = StorageMap<Prefix, Identity, (), u8, OptionQuery>;
+
+		TestExternalities::default().execute_with(|| {
+			D::insert(&(), 13);
+			assert_eq!(D::contains_key(&()), true);
+			assert_eq!(D::get(&()), Some(13));
+			assert_eq!(D::try_get(&()), Ok(13));
+			// it fails here: assertion `left == right` failed, left: 0, right: 1
+			assert_eq!(D::iter().count(), 1);
+			// and also none of these bellow work:
+			assert_eq!(D::iter_keys().count(), 1);
+			assert_eq!(D::iter_values().count(), 1);
+			assert_eq!(D::iter_values().collect::<Vec<_>>(), vec![13]);
+		})
+	}
+
+	/// Question/Problem: StorageMap + key as `Identity` and `()`
+	/// It compiles and storing/getting values work, but it can iterate over different StorageMap with the same Prefix,
+	/// is it a bug or am I missing anything?
+	///
+	/// ## Test it:
+	/// git checkout bko-test
+	/// cargo test -p frame-support iter_map_identity_with_unit_strange_access_to_the_different_map
+	#[test]
+	fn iter_map_identity_with_unit_strange_access_to_the_different_map() {
+		type A = StorageMap<Prefix, Blake2_128Concat, u16, u32, OptionQuery>;
+		type D = StorageMap<Prefix, Identity, (), u8, OptionQuery>;
+
+		TestExternalities::default().execute_with(|| {
+			D::insert(&(), 13);
+			assert_eq!(D::contains_key(&()), true);
+			assert_eq!(D::get(&()), Some(13));
+			assert_eq!(D::try_get(&()), Ok(13));
+			// we store `13` to the `D`, but cannot iterate (as previous test)
+			assert_eq!(D::iter().count(), 0);
+
+			// now we store `99` value to the `A`
+			A::insert(3, 99);
+			assert_eq!(A::contains_key(3), true);
+			assert_eq!(A::get(3), Some(99));
+			assert_eq!(A::try_get(3), Ok(99));
+			assert_eq!(A::iter_values().collect::<Vec<_>>(), vec![99]);
+
+			// The problem1: now the `D` can iterate?
+			assert_eq!(D::iter().count(), 1);
+			// The problem2: `D`` can iterate over `A` map values?
+			assert_eq!(D::iter_values().collect::<Vec<_>>(), vec![99]);
+			// it fails here: assertion `left == right` failed, left: [99], right: [13]
+			assert_eq!(D::iter_values().collect::<Vec<_>>(), vec![13]);
+		})
+	}
+
+	/// Question/Problem: StorageMap + key as `Blake2_128Concat` and `()`
+	/// It compiles and storing/getting/iterating values work, but it can iterate over different StorageMap with the same Prefix,
+	/// is it a bug or am I missing anything?
+	///
+	/// ## Test it:
+	/// git checkout bko-test
+	/// cargo test -p frame-support iter_map_blake2_128_concat_with_unit_works_but_strange_access_to_the_different_map
+	#[test]
+	fn iter_map_blake2_128_concat_with_unit_works_but_strange_access_to_the_different_map() {
+		type A = StorageMap<Prefix, Blake2_128Concat, u16, u32, OptionQuery>;
+		type D = StorageMap<Prefix, Blake2_128Concat, (), u8, OptionQuery>;
+
+		TestExternalities::default().execute_with(|| {
+			D::insert(&(), 13);
+			assert_eq!(D::contains_key(&()), true);
+			assert_eq!(D::get(&()), Some(13));
+			assert_eq!(D::try_get(&()), Ok(13));
+			assert_eq!(D::iter_keys().count(), 1);
+			assert_eq!(D::iter_values().count(), 1);
+			assert_eq!(D::iter_values().collect::<Vec<_>>(), vec![13]);
+
+			// now we store `99` value to the `A`
+			A::insert(3, 99);
+			assert_eq!(A::contains_key(3), true);
+			assert_eq!(A::get(3), Some(99));
+			assert_eq!(A::try_get(3), Ok(99));
+			assert_eq!(A::iter_keys().count(), 1);
+			assert_eq!(A::iter_values().count(), 1);
+			assert_eq!(A::iter_values().collect::<Vec<_>>(), vec![99]);
+
+			// The problem: why `D` can iterate over `A` map values?
+			assert_eq!(D::iter_keys().count(), 2);
+			assert_eq!(D::iter_values().count(), 2);
+			assert_eq!(D::iter_values().collect::<Vec<_>>(), vec![99, 13]);
+		})
+	}
 }
